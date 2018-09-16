@@ -1,6 +1,10 @@
 #include "processmanager.h"
+#include "thread"
+
 #include <QtCore>
 #include <QDebug>
+#include <sys/types.h>
+#include <signal.h>
 
 /*
  * Namespace criado com o objetivo de fazer a leitura das informações dos processos
@@ -13,27 +17,40 @@ namespace ProcessManager {
     const QString base = "/proc/";
 
     void readProcesses(const QString & filter) {
-        QDir processDir(base);
-
-        if (processDir.exists()) {
-            QDirIterator it(processDir, QDirIterator::NoIteratorFlags);
+        QDir systemDir(base);
+        QList<ProcessInfo> result;
+        if (systemDir.exists()) {
+            QDirIterator it(systemDir, QDirIterator::NoIteratorFlags);
 
             while (it.hasNext()) {
                 // Busca apenas pelas pastas que representam process IDs
                 QRegExp numeric("\\d+");
                 if (numeric.exactMatch(it.fileName())) {
                     qDebug() << it.fileName();
+                    ProcessInfo mProcess = createProcessInfo(it.filePath());
+
+                    // Se houver erro, o processo não possuirá nome
+                    if (mProcess.name != "") {
+                        result.append(mProcess);
+                    }
                 }
                 it.next();
             }
         }
     }
 
-    int getCpuPercentage(int coreno) {
-        return 0;
+    ProcessInfo createProcessInfo(QString pidpath) {
+        QDir processDir(pidpath);
+
+        // Como as pastas são volateis, pode ser que o processo acabe antes desta instrução
+        if (!processDir.exists()) return ProcessInfo();
+
+        QDirIterator it(processDir, QDirIterator::NoIteratorFlags);
+        // TODO iterar pelas pastas em /proc/$PID para encontrar as informações do processo
+
     }
 
     void killProcess(int pid) {
-
+        kill(pid, SIGKILL);
     }
 }

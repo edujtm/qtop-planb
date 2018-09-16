@@ -2,11 +2,14 @@
 #define PROCESSMANAGER_H
 
 #include <QtCore>
+#include <exception>
+#include "model/processinfo.h"
 
 namespace ProcessManager {
 
     void readProcesses(const QString & filter = nullptr);
-    int getCpuPercentage(int coreno);
+    ProcessInfo createProcessInfo(QString pidpath);
+
     void killProcess(int pid);
 }
 

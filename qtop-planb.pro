@@ -27,13 +27,15 @@ SOURCES += \
     controller/mainwindow.cpp \
     model/processinfo.cpp \
     helper/processadapter.cpp \
-    helper/processmanager.cpp
+    helper/processmanager.cpp \
+    helper/cpuwatcher.cpp
 
 HEADERS += \
     controller/mainwindow.h \
     model/processinfo.h \
     helper/processadapter.h \
-    helper/processmanager.h
+    helper/processmanager.h \
+    helper/cpuwatcher.h
 
 FORMS += \
     view/mainwindow.ui
