@@ -27,7 +27,7 @@ SOURCES += \
     controller/mainwindow.cpp \
     model/processinfo.cpp \
     helper/processreader.cpp \
-    herper/processadapter.cpp
+    helper/processadapter.cpp
 
 HEADERS += \
     controller/mainwindow.h \
