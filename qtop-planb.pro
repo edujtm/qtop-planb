@@ -26,13 +26,12 @@ SOURCES += \
         main.cpp \
     controller/mainwindow.cpp \
     model/processinfo.cpp \
-    helper/processreader.cpp \
-    helper/processadapter.cpp
+    helper/processadapter.cpp \
+    helper/processhelper.cpp
 
 HEADERS += \
     controller/mainwindow.h \
     model/processinfo.h \
-    helper/processreader.h \
     helper/processadapter.h
 
 FORMS += \
