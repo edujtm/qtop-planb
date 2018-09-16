@@ -8,33 +8,26 @@
  *
 */
 
-class ProcessInfo
-{
-    QList<QString> header = {"CPU", "PID", "PPID", "CPU%", "MEM%", "TIME", "NAME"};
+struct ProcessInfo
+{ 
     long long pid;
     long long parentpid;
     int cpuNumber;
     int cpuPercentage;
     int memoryPercentage;
-    int timeAlive;
+    long long timeAliveMs;
     QString name;
-public:
+
     ProcessInfo();
+    ProcessInfo(long long pid, long long ppid, int cpuno, int cpuper, int memper, long long timealivems, QString name);
 
     //  ------- Acessors --------
-    QList<QPair<QString, QString>> & getAllProcessInfo() const;
-    QString & getTextPid() const;
-    QString & getTextPPid() const;
-    QString & getTextCpuNumber() const;
-    QString & getTextCpuPercentage() const;
-    QString & getTextMemoryPercentage() const;
-    QString & getTextTimeAlive() const;
-    QString & getName() const;
-
-    long long getPid() const;
-
-    // ------ Mutators --------
-    void setPid(long long value);
+    QString getTextCpuPercentage() const;
+    QString getTextMemoryPercentage() const;
+    QString getTextTimeAlive() const;
+    QList<QString> getHeader() const;
+private:
+    QList<QString> header = {"CPU", "PID", "PPID", "CPU%", "MEM%", "TIME", "NAME"};
 };
 
 #endif // PROCESSINFO_H
