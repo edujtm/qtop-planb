@@ -24,15 +24,25 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
-    processinfo.cpp
+    controller/mainwindow.cpp \
+    model/processinfo.cpp \
+    helper/processreader.cpp \
+    herper/processadapter.cpp
 
 HEADERS += \
-        mainwindow.h \
-    processinfo.h
+    controller/mainwindow.h \
+    model/processinfo.h \
+    helper/processreader.h \
+    helper/processadapter.h
 
 FORMS += \
-        mainwindow.ui
+    view/mainwindow.ui
+
+# TODO remove this if compiling works
+# include(controller/controller.pri)
+# include(helper/helper.pri)
+# include(model/model.pri)
+# include(view/view.pri)
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
