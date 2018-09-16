@@ -39,11 +39,15 @@ void MainWindow::on_lineEditFilter_editingFinished()
     ui->lineEditFilter->hide();
 }
 
+/*
+ * Cria o layout para as barras de usagem de cpu dinamicamente de acordo
+ * com a quantidade de nucleos de cpu do computador
+ */
 void MainWindow::createProgressBarLayout(unsigned qnt) {
     for (unsigned i = 0; i < qnt; ++i) {
         QHBoxLayout * row = new QHBoxLayout;
         QLabel * cpuLabel = new QLabel(QString::number(i));
-        QProgressBar * cpuProgressBar = new QProgressBar();
+        QProgressBar * cpuProgressBar = new QProgressBar;
 
         cpuProgressBar->setValue(24);
         // CpuReader::queryCpuUsageValues();

@@ -27,21 +27,16 @@ SOURCES += \
     controller/mainwindow.cpp \
     model/processinfo.cpp \
     helper/processadapter.cpp \
-    helper/processhelper.cpp
+    helper/processmanager.cpp
 
 HEADERS += \
     controller/mainwindow.h \
     model/processinfo.h \
-    helper/processadapter.h
+    helper/processadapter.h \
+    helper/processmanager.h
 
 FORMS += \
     view/mainwindow.ui
-
-# TODO remove this if compiling works
-# include(controller/controller.pri)
-# include(helper/helper.pri)
-# include(model/model.pri)
-# include(view/view.pri)
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
