@@ -1,4 +1,0 @@
-
-
-FORMS += /
-	mainwindow.ui
