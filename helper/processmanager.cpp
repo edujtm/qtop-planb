@@ -16,7 +16,7 @@ namespace ProcessManager {
 
     const QString base = "/proc/";
 
-    void readProcesses(const QString & filter) {
+    QList<ProcessInfo> readProcesses(const QString & filter) {
         QDir systemDir(base);
         QList<ProcessInfo> result;
         if (systemDir.exists()) {
@@ -27,16 +27,27 @@ namespace ProcessManager {
                 QRegExp numeric("\\d+");
                 if (numeric.exactMatch(it.fileName())) {
                     qDebug() << it.fileName();
-                    ProcessInfo mProcess = createProcessInfo(it.filePath());
+
+                    ProcessInfo process;
+                    bool sucessful;
+                    process.pid = it.fileName().toInt(&sucessful);
+                    if (sucessful) {
+                        result.append(process);
+                    }
+
+                    /*
+                     ProcessInfo mProcess = createProcessInfo(it.filePath());
 
                     // Se houver erro, o processo não possuirá nome
-                    if (mProcess.name != "") {
+                    //if (mProcess.name != "") {
                         result.append(mProcess);
                     }
+                    */
                 }
                 it.next();
             }
         }
+        return result;
     }
 
     ProcessInfo createProcessInfo(QString pidpath) {

@@ -7,7 +7,7 @@
 
 namespace ProcessManager {
 
-    void readProcesses(const QString & filter = nullptr);
+    QList<ProcessInfo> readProcesses(const QString & filter = nullptr);
     ProcessInfo createProcessInfo(QString pidpath);
 
     void killProcess(int pid);

@@ -26,8 +26,6 @@ struct ProcessInfo
     QString getTextMemoryPercentage() const;
     QString getTextTimeAlive() const;
     QList<QString> getHeader() const;
-private:
-    QList<QString> header = {"CPU", "PID", "PPID", "CPU%", "MEM%", "TIME", "NAME"};
 };
 
 #endif // PROCESSINFO_H

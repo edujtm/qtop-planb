@@ -21,18 +21,30 @@ class CpuWatcher
 
     const QString FILE = "/proc/stat";
 
-
     struct CpuData {
-        const int NUM_CPU_STATES = 10;
+        int NUM_CPU_STATES;
 
         size_t times[10];
+
+        CpuData() : NUM_CPU_STATES(10) {}
+
+        bool operator==(const CpuData & other) const {
+            for (int i = 0; i < NUM_CPU_STATES; ++i) {
+                if (times[i] != other.times[i]) return false;
+            }
+            return true;
+        }
     };
 
     unsigned numCores;
     QList<CpuData> previous;
+    QList<CpuData> now;
+    QTimer * updateTimer;
+
 public:
     CpuWatcher();
     int getCpuUsage(unsigned cpuno);
+    void updateTimes();
 
 private:
     CpuData parseCpuUsage(QString cpuline);

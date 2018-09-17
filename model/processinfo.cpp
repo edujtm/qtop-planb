@@ -30,7 +30,3 @@ QString ProcessInfo::getTextTimeAlive() const {
     QString result = QString::number(hours) + ":" + QString::number(restMinutes) + ":" + QString::number(restSeconds);
     return result;
 }
-
-QList<QString> ProcessInfo::getHeader() const {
-    return header;
-}
