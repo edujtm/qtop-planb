@@ -99,7 +99,19 @@ void MainWindow::updateCpuUsage() {
 }
 
 void MainWindow::updateProcessList() {
-    QModelIndex index = ui->treeWidgetProcessView->currentIndex();
+
+    QModelIndex itemIdx = ui->treeWidgetProcessView->currentIndex();
+    // Trying to avoid nullptr for itemIdx after clearing treeWidgetProcessView
+    QPair<int, int> pos;
+    if (itemIdx.isValid()) {
+        pos.first = itemIdx.row();
+        pos.second = itemIdx.column();
+    } else {
+        pos.first = 0;
+        pos.second = 0;
+    }
+
+    qDebug() << itemIdx.isValid();
 
     processList = ProcessManager::readProcesses();
     ui->treeWidgetProcessView->clear();
@@ -107,9 +119,22 @@ void MainWindow::updateProcessList() {
         addRoot(process);
     }
 
-    if (index.row() > processList.size()) {
-        index = index.sibling(processList.size()-1, 0);
-    }
+    // The operating system will probably have at least one process running,
+    // placed this line here just for ease of mind
+    if (ui->treeWidgetProcessView->topLevelItemCount() == 0) return;
 
-    ui->treeWidgetProcessView->setCurrentIndex(index);
+    // Keeps the selected item in place after treeWidgetProcessView is cleared
+    // If the process list shrinks by having a process terminated, the last process
+    // is the one selected
+    if (pos.first > processList.size()) {
+        int lastIdx = ui->treeWidgetProcessView->topLevelItemCount() - 1;
+        QTreeWidgetItem * lastItem = ui->treeWidgetProcessView->topLevelItem(lastIdx);
+        ui->treeWidgetProcessView->setCurrentItem(lastItem);
+    } else {
+        // The selected item jumps to the item above or below when the list changes
+        // above if the terminated process has lower PID and vice-versa. Need to fix
+        // that
+        QTreeWidgetItem * selectedItem = ui->treeWidgetProcessView->topLevelItem(pos.first);
+        ui->treeWidgetProcessView->setCurrentItem(selectedItem);
+    }
 }

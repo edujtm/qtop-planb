@@ -26,7 +26,7 @@ namespace ProcessManager {
                 // Busca apenas pelas pastas que representam process IDs
                 QRegExp numeric("\\d+");
                 if (numeric.exactMatch(it.fileName())) {
-                    qDebug() << it.fileName();
+                    //qDebug() << it.fileName();
 
                     ProcessInfo process;
                     bool sucessful;
@@ -34,7 +34,7 @@ namespace ProcessManager {
                     if (sucessful) {
                         result.append(process);
                     }
-
+                    //qDebug() << it.filePath();
                     /*
                      ProcessInfo mProcess = createProcessInfo(it.filePath());
 
@@ -55,9 +55,30 @@ namespace ProcessManager {
 
         // Como as pastas são volateis, pode ser que o processo acabe antes desta instrução
         if (!processDir.exists()) return ProcessInfo();
+        ProcessInfo result;
+
+        parseStatusFile(pidpath, result);
 
         QDirIterator it(processDir, QDirIterator::NoIteratorFlags);
         // TODO iterar pelas pastas em /proc/$PID para encontrar as informações do processo
+        while (it.hasNext()) {
+            it.next();
+        }
+
+    }
+
+    void parseStatusFile(const QString & pidpath, ProcessInfo & result) {
+        QFile statusFile(pidpath + "/status");
+
+        if (!statusFile.open(QFile::ReadOnly | QFile::Text)) return;
+
+        QTextStream in(&statusFile);
+        const QString NAME_STR("name");
+
+
+        while(!in.atEnd()) {
+            // TODO Parse pid status text stream
+        }
 
     }
 

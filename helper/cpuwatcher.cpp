@@ -44,7 +44,7 @@ int CpuWatcher::getCpuUsage(unsigned cpuno) {
 
     prevTotal = prevIdle + prevNonIdle;
     total = idle + nonIdle;
-    qDebug() << "totals: " << total << " " << prevTotal;
+    //qDebug() << "totals: " << total << " " << prevTotal;
 
     totald = total - prevTotal;
     idled = idle - prevIdle;
